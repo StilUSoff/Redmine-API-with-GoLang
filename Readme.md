@@ -39,6 +39,19 @@
 
 - [http://<local-ip>:80/](http://<local-ip>:80/) (если используется порт 80 с правами суперпользователя, иначе <http://<local-ip>:[port]/>)
 
+
+## Взаимодействие с API
+
+Для взаимодействия с Redmine API введите в терминал следующее:
+
+```sh
+go run main.go -Host "http://<local-ip>" -API_Key "<redmine-api-key>"
+```
+Или введите свои значения:
+```sh
+go run main.go -Host "YOUR_URL" -API_Key "YOUR_API_KEY"
+```
+
 ## Взаимодействие с Redmine
 
 Для входа в админ-панель Redmine используйте следующие учетные данные:
