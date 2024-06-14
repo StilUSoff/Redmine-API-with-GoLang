@@ -39,4 +39,20 @@ func main() {
 	for _, e := range p.Projects {
 		fmt.Println("-", e.Name)
 	}
+
+	// Create a new issue
+	issue := redmine.IssueCreateObject{
+		ProjectID:   1, // Replace with an actual project ID
+		Subject:     "New Issue from Go",
+		Description: "This is a test issue created from Go",
+		TrackerID:   1, // Replace with an actual tracker ID
+	}
+
+	createdIssue, _, err := r.IssueCreate(issue)
+	if err != nil {
+		fmt.Println("Issue creation error:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("Issue created successfully with ID:", createdIssue.ID)
 }
