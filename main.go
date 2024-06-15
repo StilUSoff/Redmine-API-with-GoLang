@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 
@@ -12,19 +11,18 @@ func main() {
 
 	var r redmine.Context
 
-	rdmnHost := flag.String("Host", "", "")
-	rdmnAPIKey := flag.String("API_Key", "", "")
-	flag.Parse()
+	rdmnHost := os.Getenv("HOST")
+	rdmnAPIKey := os.Getenv("API_Key")
 
 	// Get variables from environment for connect to Redmine server
-	if *rdmnHost == "" || *rdmnAPIKey == "" {
-		fmt.Println("Init error: make sure you write variables `Host` and `API_Key` in file start")
+	if rdmnHost == "" || rdmnAPIKey == "" {
+		fmt.Println("Init error: make sure you write variables `HOST` and `API_Key` in file start")
 		os.Exit(1)
 	}
 
 	// Init Redmine ctx
-	r.SetEndpoint(*rdmnHost)
-	r.SetAPIKey(*rdmnAPIKey)
+	r.SetEndpoint(rdmnHost)
+	r.SetAPIKey(rdmnAPIKey)
 
 	fmt.Println("Init: success")
 

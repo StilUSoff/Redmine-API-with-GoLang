@@ -45,12 +45,46 @@
 Для взаимодействия с Redmine API введите в терминал следующее:
 
 ```sh
-go run main.go -Host "http://<VM_HOST>" -API_Key "<redmine-api-key>"
+go run main.go -HOST "http://<VM_HOST>" -API_Key "<redmine-api-key>"
 ```
-Или введите свои значения:
+Или:
 ```sh
-go run main.go -Host "YOUR_URL" -API_Key "YOUR_API_KEY"
+go run main.go -HOST "http://localhost:80" -API_Key "<redmine-api-key>"
 ```
+Также можно ввести свои значения:
+```sh
+go run main.go -HOST "YOUR_URL" -API_Key "YOUR_API_KEY"
+```
+
+## Работа с контейнером и пост-запросом 
+
+Создание образа из Dockerfile:
+```sh
+docker build -t redmine-api .
+```
+
+Запуск docker-контейнера:
+
+```sh
+docker run -p [порт на локальной машине]:[порт внутри контейнера для перенаправления] -e HOST=[хост, на котором контейнер будет слушать] -e API_KEY=[API-ключ redmine, находиться в личном кабинете пользователя в redmine] stilusoff/redmine-api
+```
+
+Пример запуска:
+
+```sh
+docker run -p 8080:8080 -e HOST="http://<VM_HOST>" -e API_Key="<redmine-api-key>" redmine-api
+```
+
+Примеры запросов:
+
+```sh
+curl -X POST http://localhost:8080/viwe_tasks
+```
+
+```sh
+curl -X POST http://localhost:8080/viwe_tasks
+```
+
 
 ## Взаимодействие с Redmine
 
@@ -69,3 +103,12 @@ go run main.go -Host "YOUR_URL" -API_Key "YOUR_API_KEY"
     ```
     Пароль: `<mysql-password>`
 2. Имя базы данных: `myredminedb`
+
+## Все команды терминала
+```sh
+cd redmine
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv global 3.0.1
+sudo /home/user/.rbenv/versions/3.0.1/bin/ruby bin/rails server -e production -u webrick -p 80 -b 0.0.0.0
+```
