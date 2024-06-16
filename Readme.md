@@ -66,7 +66,7 @@ docker run -p [порт на локальной машине]:[порт внут
 Пример запуска:
 
 ```sh
-docker run -p 8080:8080 -e HOST="http://<VM_HOST>" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
+docker run -p 8080:8080 -e HOST="http://<VM_HOST>:80" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
 ```
 
 Или:
@@ -75,13 +75,15 @@ docker run -p 8080:8080 -e HOST="http://<VM_HOST>" -e API_Key="<redmine-api-key>
 docker run -p 8080:8080 -e HOST="http://<local-ip>:80" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
 ```
 
-Примеры запросов:
+Примеры запросов (вместо localhost можно ввести ip-адресс):
 
+Список проектов:
 ```sh
 curl -X GET -H "API_KEY: <redmine-api-key>" http://localhost:8080/view_projects
 
 ```
 
+Создать задачу:
 ```sh
 curl -X POST -H "API_KEY: <redmine-api-key>" "http://localhost:8080/create_issue?ProjectID=1&Subject=New%20Issue%20from%20Go&Description=This%20is%20a%20test%20issue%20created%20from%20Go&TrackerID=1"
 
