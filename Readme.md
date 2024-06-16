@@ -52,7 +52,7 @@ docker buildx build --platform linux/amd64 -t stilusoff/redmine-api:latest .
 docker push stilusoff/redmine-api:latest
 ```
 
-Пул образа
+Пул образа:
 ```sh
 docker pull stilusoff/redmine-api:latest
 ```
@@ -77,17 +77,15 @@ docker run -p 8080:8080 -e HOST="http://<local-ip>:80" -e API_Key="<redmine-api-
 
 Примеры запросов (вместо localhost можно ввести ip-адресс):
 
-Список проектов:
-```sh
-curl -X GET -H "API_KEY: <redmine-api-key>" http://localhost:8080/view_projects
+- Список проектов:
+    ```sh
+    curl -X GET -H "API_KEY: <redmine-api-key>" http://localhost:8080/view_projects
+    ```
 
-```
-
-Создать задачу:
-```sh
-curl -X POST -H "API_KEY: <redmine-api-key>" "http://localhost:8080/create_issue?ProjectID=1&Subject=New%20Issue%20from%20Go&Description=This%20is%20a%20test%20issue%20created%20from%20Go&TrackerID=1"
-
-```
+- Создать задачу:
+    ```sh
+    curl -X POST -H "API_KEY: <redmine-api-key>" "http://localhost:8080/create_issue?ProjectID=1&Subject=New%20Issue%20from%20Go&Description=This%20is%20a%20test%20issue%20created%20from%20Go&TrackerID=1"
+    ```
 
 
 ## Взаимодействие с Redmine
