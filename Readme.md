@@ -63,6 +63,16 @@ go run main.go -HOST "YOUR_URL" -API_Key "YOUR_API_KEY"
 docker build -t redmine-api .
 ```
 
+Пуш образа:
+```sh
+docker push yourusername/redmine-api:latest
+```
+
+Пул образа
+```sh
+docker pull stilusoff/redmine-api:latest
+```
+
 Запуск docker-контейнера:
 
 ```sh
@@ -84,7 +94,6 @@ curl -X POST http://localhost:8080/viwe_tasks
 ```sh
 curl -X POST http://localhost:8080/viwe_tasks
 ```
-
 
 ## Взаимодействие с Redmine
 
