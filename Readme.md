@@ -65,7 +65,7 @@ docker build -t redmine-api .
 
 Пуш образа:
 ```sh
-docker push yourusername/redmine-api:latest
+docker push stilusoff/redmine-api:latest
 ```
 
 Пул образа
@@ -83,6 +83,12 @@ docker run -p [порт на локальной машине]:[порт внут
 
 ```sh
 docker run -p 8080:8080 -e HOST="http://<VM_HOST>" -e API_Key="<redmine-api-key>" redmine-api
+```
+
+Или: 
+
+```sh
+docker run -p 8080:8080 -e HOST="http://localhost:80" -e API_Key="<redmine-api-key>" redmine-api
 ```
 
 Примеры запросов:
