@@ -60,7 +60,7 @@ go run main.go -HOST "YOUR_URL" -API_Key "YOUR_API_KEY"
 
 Создание образа из Dockerfile:
 ```sh
-docker build -t redmine-api .
+docker buildx build --platform linux/amd64 -t stilusoff/redmine-api:latest .     
 ```
 
 Пуш образа:
@@ -76,30 +76,33 @@ docker pull stilusoff/redmine-api:latest
 Запуск docker-контейнера:
 
 ```sh
-docker run -p [порт на локальной машине]:[порт внутри контейнера для перенаправления] -e HOST=[хост, на котором контейнер будет слушать] -e API_KEY=[API-ключ redmine, находиться в личном кабинете пользователя в redmine] stilusoff/redmine-api
+docker run -p [порт на локальной машине]:[порт внутри контейнера для перенаправления] -e HOST=[хост, на котором контейнер будет слушать] -e API_KEY=[API-ключ redmine, находиться в личном кабинете пользователя в redmine] stilusoff/redmine-api:latest
 ```
 
 Пример запуска:
 
 ```sh
-docker run -p 8080:8080 -e HOST="http://<VM_HOST>" -e API_Key="<redmine-api-key>" redmine-api
+docker run -p 8080:8080 -e HOST="http://<VM_HOST>" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
 ```
 
-Или: 
+Или:
 
 ```sh
-docker run -p 8080:8080 -e HOST="http://localhost:80" -e API_Key="<redmine-api-key>" redmine-api
+docker run -p 8080:8080 -e HOST="http://<local-ip>:80" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
 ```
 
 Примеры запросов:
 
 ```sh
-curl -X POST http://localhost:8080/viwe_tasks
+curl -X GET -H "API_KEY: <redmine-api-key>" http://localhost:8080/view_projects
+
 ```
 
 ```sh
-curl -X POST http://localhost:8080/viwe_tasks
+curl -X POST -H "API_KEY: <redmine-api-key>" "http://localhost:8080/create_issue?ProjectID=1&Subject=New%20Issue%20from%20Go&Description=This%20is%20a%20test%20issue%20created%20from%20Go&TrackerID=1"
+
 ```
+
 
 ## Взаимодействие с Redmine
 
