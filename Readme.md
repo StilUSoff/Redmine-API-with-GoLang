@@ -40,22 +40,6 @@
 - [http://<VM_HOST>:80/](http://<VM_HOST>:80/) (если используется порт 80 с правами суперпользователя, иначе <http://<VM_HOST>:[port]/>)
 
 
-## Взаимодействие с API
-
-Для взаимодействия с Redmine API введите в терминал следующее:
-
-```sh
-go run main.go -HOST "http://<VM_HOST>" -API_Key "<redmine-api-key>"
-```
-Или:
-```sh
-go run main.go -HOST "http://localhost:80" -API_Key "<redmine-api-key>"
-```
-Также можно ввести свои значения:
-```sh
-go run main.go -HOST "YOUR_URL" -API_Key "YOUR_API_KEY"
-```
-
 ## Работа с контейнером и пост-запросом 
 
 Создание образа из Dockerfile:
