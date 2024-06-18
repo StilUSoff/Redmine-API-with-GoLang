@@ -6,7 +6,20 @@ import (
 	"reflect"
 )
 
+/////////////////
+
+var mes_init int
+
+func init() {
+	fmt.Println("НАЧАЛО")
+	mes_init = 1
+}
+
 func main() {
+
+	fmt.Println(fmt.Sprintln("mes_init: ", mes_init))
+
+	/////////////////
 
 	// sdfsdf
 
@@ -15,6 +28,8 @@ func main() {
 	sdfgasg
 	kjfgh
 	*/
+
+	/////////////////
 
 	a := 1
 	fmt.Println("Test", a)
@@ -61,11 +76,15 @@ func main() {
 	aa, _, cc = 1, 2, 3
 	fmt.Println(aa, bb, cc)
 
+	/////////////////
+
 	print()
 
 	messages := "10"
 	print_mes(messages)
 	print_mes("123")
+
+	/////////////////
 
 	var returning_val_1, ret_val_1 string
 	returning_val_1, ret_val_1 = test_f_of_return(10, 10, 5, 3)
@@ -75,6 +94,8 @@ func main() {
 	fmt.Println(test_f_of_return(15, 11, 7, 2))
 
 	fmt.Println(test_f_of_return_one(15, 11, 7, 2))
+
+	/////////////////
 
 	ages := [...]int{4, 29, 47, 15, 75, 5}
 	i := 0
@@ -87,6 +108,8 @@ func main() {
 		i += 1
 	}
 
+	/////////////////
+
 	i = 0
 	days := [8]string{"пн", "вт", "ср", "чт", "пт", "сб", "вс", "ывапрв"}
 	for i <= len(days)-1 {
@@ -94,6 +117,8 @@ func main() {
 		fmt.Println(messa)
 		i += 1
 	}
+
+	/////////////////
 
 	i = 0
 	numbs := [][]int{{1, 2, 3, 5}, {-1, 2, -4, 3}, {5, 3, 2, 8}}
@@ -110,6 +135,61 @@ func main() {
 	}
 
 	fmt.Println(find_min_numbs(10, 23, -12, 42, -12, -43, -64, 23, 64))
+
+	func() {
+		fmt.Println("sdf")
+	}()
+
+	/////////////////
+
+	inc := increment()
+	for ii := 0; ii < 5; ii++ {
+		fmt.Println(inc())
+	}
+
+	inc = increment()
+	for ii := 0; ii < 5; ii++ {
+		fmt.Println(inc())
+	}
+
+	/////////////////
+	fmt.Println("переменная message_uk:")
+	message_uk := "asd"
+	fmt.Println("переменная до функции:", message_uk, "; адрес памяти:", &message_uk)
+	print_mess_pointers(message_uk)
+	fmt.Println("переменная вне функции:", message_uk, "; адрес памяти:", &message_uk)
+
+	fmt.Println("переменная message_uk_1:")
+	message_uk_1 := "asd"
+	fmt.Println("переменная до функции:", message_uk_1, "; адрес памяти:", &message_uk_1)
+	print_mess_pointers_2(&message_uk_1)
+	fmt.Println(fmt.Sprintln("переменная message_uk_1 вне функции:", message_uk_1, "; ссылка на адрес памяти с переменной (&):", &message_uk_1, "; нахождение значения, которое хранится в участке памяти, указанном по ссылке (*):", *&message_uk_1)) // переменная
+
+	/////////////////
+	var p *int
+	fmt.Println(p, &p)
+
+	ne := 20
+	p = &ne
+	fmt.Println(p, &p, *p, ne, &ne)
+
+	fmt.Println(p, &p, *p, *&p, **&p) // & указывает на адресс памяти, * указывает на данные по адресу памяти. комбинация *& невелируют друг друга, так как получается "найди данные по адресу этой переменной"
+
+	var bc *int
+	nem := 10
+	bc = p
+	fmt.Println(p, &p, *p, bc, &bc, *bc, ne, &ne, nem, &nem)
+	bc = &nem
+	fmt.Println(p, &p, *p, bc, &bc, *bc, ne, &ne, nem, &nem)
+
+	fmt.Println(ne, &ne, p, *p, &p)
+	*p = 5 // если n := 20 и p = &ne, то (*p = 5) == (ne = 5)
+	fmt.Println(ne, &ne, p, *p, &p)
+
+	ne = 50
+	fmt.Println(ne, &ne, p, *p, &p)
+
+	/////////////////
 
 }
 
@@ -215,4 +295,22 @@ func find_min_numbs(numbers ...int) int {
 		i += 1
 	}
 	return min
+}
+
+func increment() func() int {
+	count := 0
+	return func() int {
+		count++
+		return count
+	}
+}
+
+func print_mess_pointers(message string) {
+	message += " aaaddd"
+	fmt.Println("переменная в функции:", message, "; адрес памяти:", &message)
+}
+
+func print_mess_pointers_2(message *string) {
+	*message += " aaaddd"
+	fmt.Println("переменная в функции:", message, "значение переменной в функции:", *message, "; адрес памяти:", &message)
 }
