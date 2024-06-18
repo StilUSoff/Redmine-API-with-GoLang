@@ -79,4 +79,10 @@ func main() {
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Println("Server error:", err)
 	}
+	// аналогично:
+	// err := http.ListenAndServe(":8080", nil)
+	// if err != nil {
+	// 	fmt.Println("Server error:", err)
+	// }
+
 }
