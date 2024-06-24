@@ -15,7 +15,24 @@ func init() {
 	mes_init = 1
 }
 
+func handler_panic() {
+	if r := recover(); r != nil {
+		panic(r)
+	} else {
+		fmt.Println("теперь точно КОНЕЦ")
+	}
+
+}
+
 func main() {
+
+	/////////////////
+
+	//defer откладывает срабатывание строчки на самый конец, перед выходом из тела функции в случае ошибки или успеха, не важно
+	//panic() просто вывод текста в терминал "в виде" ошибки и паники
+	defer handler_panic()
+
+	/////////////////
 
 	fmt.Println(fmt.Sprintln("mes_init: ", mes_init))
 
@@ -191,6 +208,139 @@ func main() {
 
 	/////////////////
 
+	messagege := [3]string{"1", "2", "3"}
+	fmt.Println(messagege)
+	print_messeg(&messagege)
+	fmt.Println(messagege)
+
+	messagegeeg := make([]string, 5)
+	fmt.Println(messagegeeg)
+	fmt.Println(len(messagegeeg))
+	fmt.Println(cap(messagegeeg))
+	messagegeeg = append(messagegeeg, "6")
+	fmt.Println(messagegeeg)
+	fmt.Println(len(messagegeeg))
+	fmt.Println(cap(messagegeeg))
+
+	/////////////////
+
+	matrix := make([][]int, 6)
+
+	for i := 0; i <= 5; i++ {
+		matrix[i] = make([]int, 6)
+		for j := 0; j <= 5; j++ {
+			matrix[i][j] = i + j
+		}
+		matrix[i] = append(matrix[i], 12)
+		fmt.Println(matrix[i])
+	}
+
+	/////////////////
+
+	for x := 0; true; x++ {
+		fmt.Println(x)
+		if x >= 12 {
+			break
+		}
+	}
+
+	x := 0
+	for true {
+		fmt.Println(x)
+		x++
+		if x >= 12 {
+			break
+		}
+	}
+
+	stringing := []string{"asd", "asf", "gasdf"}
+	for ij := range stringing {
+		fmt.Println(stringing[ij])
+	}
+
+	for index, value := range stringing {
+		fmt.Println(index, value)
+	}
+
+	for _, value := range stringing {
+		fmt.Println(value)
+	}
+
+	/////////////////
+
+	users := map[string]int{
+		"Vasya":  15,
+		"Petya":  23,
+		"Kostya": 48,
+	}
+	delete(users, "Vasya")
+	for key, value := range users {
+		fmt.Println(key, value)
+	}
+
+	age, exist := users["Kostya"]
+	if exist {
+		fmt.Println("EXIST: Kostya", age)
+	}
+
+	users_1 := make(map[string]int)
+	users_1["Petya"] = 17
+	users_1["Pasha"] = 21
+	for key, value := range users_1 {
+		fmt.Println(key, value)
+	}
+
+	/////////////////
+
+	user_1 := User{"Vasya", 23, "Male", 75, 185}
+	user_2 := NewUser("Olga", 34, "Female", 63, 168)
+	fmt.Printf("%+v\n", NewUser("Sasha", 42, "Male", 94, 195))
+
+	user_1.print_info()
+	user_2.print_info()
+	user_2.set_name("Oksana")
+	user_2.print_info()
+	fmt.Println("User_1 is adult?", user_1.age.isAdult())
+
+	/////////////////
+
+}
+
+type Age int
+
+func (a Age) isAdult() bool {
+	return a <= 18
+}
+
+type User struct {
+	name   string
+	age    Age
+	sex    string
+	weight int
+	height int
+}
+
+func (u User) print_info() {
+	fmt.Println(fmt.Sprintf("name: %s, age: %#v, sex: %s, weight: %#v, height: %#v", u.name, u.age, u.sex, u.weight, u.height))
+}
+
+func (u *User) set_name(new_name string) {
+	u.name = new_name
+	fmt.Println(fmt.Sprintf("New name: %s", u.name))
+}
+
+func NewUser(name string, age int, sex string, weight int, height int) User {
+	return User{
+		name:   name,
+		age:    Age(age),
+		sex:    sex,
+		weight: weight,
+		height: height,
+	}
+
+	// ИЛИ
+
+	// return User{name, age, sex, weight, height}
 }
 
 var aaa, bbb, ccc = 5, 6, 7
@@ -313,4 +463,14 @@ func print_mess_pointers(message string) {
 func print_mess_pointers_2(message *string) {
 	*message += " aaaddd"
 	fmt.Println("переменная в функции:", message, "значение переменной в функции:", *message, "; адрес памяти:", &message)
+}
+
+func print_messeg(message *[3]string) error {
+	lenght := len(message)
+	if lenght == 0 {
+		return errors.New("empty array")
+	}
+	message[1] = "5"
+	fmt.Println(*message)
+	return nil
 }
