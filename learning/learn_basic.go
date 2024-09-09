@@ -435,7 +435,7 @@ func test_f_of_return_one(val, val_2, val_3 int, val_4 int) string {
 	return fmt.Sprintf("Ответ: %d, удачи%s", val+val_2+val_3-val_4, "!!!")
 }
 
-func ager_check(age int) (string, error) { // пример возврата переменной и nil/ошибки
+func ager_check(age int) (string, error) { // пример возврата переменной и nil/ошибки (nil ТОЖЕ САМОЕ ЧТО None)
 	if age >= 18 && age < 45 {
 		return "Норм", nil
 	} else if age <= 10 || age >= 50 {
