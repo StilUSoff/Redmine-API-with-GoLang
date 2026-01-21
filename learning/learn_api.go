@@ -1,5 +1,7 @@
 package main
 
+// api base
+
 import (
 	"fmt"
 	"log"
@@ -8,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func api_base() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

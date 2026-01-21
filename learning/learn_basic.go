@@ -155,6 +155,7 @@ func main() {
 	///////////////// про функции с известным размером входного массива и неизвестным; про функции с неограниченным количеством входных переменных; про анонимные функции; про безымянные функции внутри основной функции, которые сразу же исполняются
 
 	i = 0
+	// ниже - слайс
 	numbs := [][]int{{1, 2, 3, 5}, {-1, 2, -4, 3}, {5, 3, 2, 8}}
 	for i <= len(numbs[:])-1 {
 		fmt.Println(find_min(numbs[i]))
@@ -343,6 +344,11 @@ func main() {
 	fmt.Println("s.Area()", s.Area())
 	fmt.Println("s.Perimeter()", s.Perimeter())
 
+	///////////////// func inside func
+	func() {
+		fmt.Println("asdfasdf")
+	}()
+
 }
 
 type Age int
@@ -435,6 +441,7 @@ func test_f_of_return_one(val, val_2, val_3 int, val_4 int) string {
 	return fmt.Sprintf("Ответ: %d, удачи%s", val+val_2+val_3-val_4, "!!!")
 }
 
+// /// func with 2 return
 func ager_check(age int) (string, error) { // пример возврата переменной и nil/ошибки
 	if age >= 18 && age < 45 {
 		return "Норм", nil
