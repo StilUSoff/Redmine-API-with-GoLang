@@ -9,7 +9,7 @@
     ```sh
     ssh user@<VM_HOST> -p 22
     ```
-    Пароль: `<ssh-password>`
+    Адрес и пароль лежат в локальном `.env` (`VM_HOST`, `VM_SSH_PASSWORD`), см. раздел «Конфигурация».
 3. Закройте окно с виртуальной машиной, выбрав опцию "Продолжить работу в фоновом режиме".
 
 ## Запуск Redmine на виртуальной машине
@@ -37,7 +37,7 @@
 
 Для подключения к Redmine с другого устройства, откройте в браузере:
 
-- [http://<VM_HOST>:80/](http://<VM_HOST>:80/) (если используется порт 80 с правами суперпользователя, иначе <http://<VM_HOST>:[port]/>)
+- `http://<VM_HOST>:80/` (если используется порт 80 с правами суперпользователя, иначе `http://<VM_HOST>:[port]/`)
 
 
 ## Работа с контейнером и пост-запросом 
@@ -57,54 +57,55 @@ docker push stilusoff/redmine-api:latest
 docker pull stilusoff/redmine-api:latest
 ```
 
-Запуск docker-контейнера:
+Запуск docker-контейнера (переменные `HOST` и `API_Key` берутся из `.env`):
 
 ```sh
-docker run -p [порт на локальной машине]:[порт внутри контейнера для перенаправления] -e HOST=[хост, на котором контейнер будет слушать] -e API_KEY=[API-ключ redmine, находиться в личном кабинете пользователя в redmine] stilusoff/redmine-api:latest
+docker run -p [порт на локальной машине]:[порт внутри контейнера для перенаправления] --env-file .env stilusoff/redmine-api:latest
 ```
 
 Пример запуска:
 
 ```sh
-docker run -p 8080:8080 -e HOST="http://<VM_HOST>:80" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
+docker run -p 8080:8080 --env-file .env stilusoff/redmine-api:latest
 ```
 
-Или:
-
-```sh
-docker run -p 8080:8080 -e HOST="http://<local-ip>:80" -e API_Key="<redmine-api-key>" stilusoff/redmine-api:latest
-```
-
-Примеры запросов (вместо localhost можно ввести ip-адресс):
+Примеры запросов (вместо localhost можно ввести ip-адресс; `API_Key` — из `.env`):
 
 - Список проектов:
     ```sh
-    curl -X GET -H "API_KEY: <redmine-api-key>" http://localhost:8080/view_projects
+    source .env
+    curl -X GET -H "API_KEY: $API_Key" http://localhost:8080/view_projects
     ```
 
 - Создать задачу:
     ```sh
-    curl -X POST -H "API_KEY: <redmine-api-key>" "http://localhost:8080/create_issue?ProjectID=1&Subject=New%20Issue%20from%20Go&Description=This%20is%20a%20test%20issue%20created%20from%20Go&TrackerID=1"
+    source .env
+    curl -X POST -H "API_KEY: $API_Key" "http://localhost:8080/create_issue?ProjectID=1&Subject=New%20Issue%20from%20Go&Description=This%20is%20a%20test%20issue%20created%20from%20Go&TrackerID=1"
     ```
 
 
 ## Взаимодействие с Redmine
 
-Для входа в админ-панель Redmine используйте следующие учетные данные:
-
-- Пользователь: `<admin-user>`
-- Пароль: `<admin-password>`
+Учётные данные админ-панели Redmine — в `.env` (`REDMINE_ADMIN_USER`, `REDMINE_ADMIN_PASSWORD`).
 
 ## Информация о базе данных
 
 Для доступа к базе данных MySQL выполните следующие команды:
 
-1. Откройте терминал и введите:
+1. Откройте терминал и введите (пароль — `MYSQL_PASSWORD` из `.env`):
     ```sh
-    mysql -u <mysql-user> -p
+    mysql -u <MYSQL_USER> -p
     ```
-    Пароль: `<mysql-password>`
 2. Имя базы данных: `myredminedb`
+
+## Конфигурация
+
+Все адреса, ключи и пароли хранятся в файле `.env`, который не коммитится. Шаблон — `.env.example`:
+
+```sh
+cp .env.example .env
+# заполните значения
+```
 
 ## Все команды терминала
 ```sh
